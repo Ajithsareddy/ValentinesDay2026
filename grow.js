@@ -29,6 +29,7 @@
 
   // Stage 1..3
   let stage = state.stage ? Number(state.stage) : 1;
+  let scrolledToBottom = false;
 
   // Progress 0..100
   let water = Number(state.growWater ?? 0);
@@ -96,21 +97,38 @@
     }
   }
 
-  function maybeAdvanceStage() {
+    function maybeAdvanceStage() {
     const combo = (water + sunProg) / 2;
+    console.log("Before 2 if's");
 
     if (combo >= 35 && stage < 2) setPlantStage(2);
     if (combo >= 75 && stage < 3) setPlantStage(3);
+    console.log("After 2 if's");
 
     if (water >= 100 && sunProg >= 100) {
       setPlantStage(3);
       nextBtn.classList.remove('is-hidden');
       if (typeof setState === 'function') setState({ growDone: true });
+
+      // Auto-scroll to bottom once (helps show next controls/status on mobile)
+      if (!scrolledToBottom) {
+        scrolledToBottom = true;
+        // Small timeout to allow UI updates before scrolling
+        setTimeout(() => {
+          console.log('Auto-scroll: water and sun reached 100% — scrolling to bottom (window)');
+          try {
+            const docHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
+            window.scrollTo(0, 100000);
+          } catch (e) {
+            // fallback
+            window.scrollTo(0, 100000);
+          }
+        }, 150);
+      }
     }
 
     setHintAndStatus();
   }
-
   // Restore stage + meters
   setPlantStage(stage);
   setMeters();
