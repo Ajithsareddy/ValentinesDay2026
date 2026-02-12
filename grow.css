@@ -10,6 +10,10 @@
   gap: 10px;
 }
 
+#growHint {
+  display: none;
+}
+
 /* Clear instructions card */
 .howTo{
   width: min(360px, 92vw);
@@ -55,7 +59,7 @@
 .playArea{
   position: relative;
   width: min(360px, 92vw);
-  height: 420px;
+  height: 400px;
   margin: 0 auto;
   border-radius: 22px;
   background: rgba(255,255,255,0.55);

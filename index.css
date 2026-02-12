@@ -44,6 +44,9 @@ body{
   display: grid;
   grid-template-rows: auto 1fr auto;
   gap: 14px;
+  /* allow the page to scroll on mobile and enable momentum scrolling */
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .topbar{
@@ -198,6 +201,8 @@ body{
   place-items: center;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
+  /* allow vertical pan gestures while still capturing taps */
+  touch-action: pan-y;
 }
 
 .pot{
@@ -300,6 +305,24 @@ body{
   transform: rotate(-18deg);
   left: calc(50% - 6px);
   bottom: 14px;
+}
+
+/* ---------------- Scroll hint ---------------- */
+.scrollHint{
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--muted);
+  text-align: center;
+  opacity: 0.9;
+  -webkit-user-select: none;
+  user-select: none;
+  animation: hintFloat 1.6s ease-in-out infinite;
+}
+
+@keyframes hintFloat{
+  0% { transform: translateY(0); opacity: 0.9; }
+  50% { transform: translateY(-6px); opacity: 1; }
+  100% { transform: translateY(0); opacity: 0.9; }
 }
 
 /* ============ Planting Animation State ============ */
