@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no"
+  />
+  <meta name="theme-color" content="#FFF7FB" />
+  <title>Seed to Bloom 🌿💗</title>
+
+  <link rel="stylesheet" href="./index.css" />
+</head>
+
+<body>
+  <!-- Decorative corners -->
+  <div class="vines vines--tl" aria-hidden="true"></div>
+  <div class="vines vines--br" aria-hidden="true"></div>
+
+  <main class="screen">
+    <header class="topbar">
+      <div class="pill">🌿 Seed to Bloom</div>
+    </header>
+
+    <section class="center">
+      <h1 class="title">
+        A tiny gift… <span class="pink">for you 💗</span>
+      </h1>
+
+      <p class="subtitle">
+        Tap the pot to plant a little seed.
+      </p>
+
+      <!-- Pot Scene -->
+      <div class="scene">
+        <button id="potButton" class="potWrap" aria-label="Plant the seed">
+          <div class="pot" aria-hidden="true">
+            <div class="soil"></div>
+            <div class="seed" id="seed" aria-hidden="true"></div>
+            <div class="sprout" id="sprout" aria-hidden="true"></div>
+          </div>
+          <div class="shadow" aria-hidden="true"></div>
+        </button>
+      </div>
+
+      <!-- Status text -->
+      <p id="statusText" class="status" role="status" aria-live="polite">
+        (It’s waiting…)
+      </p>
+
+      <!-- CTA -->
+      <div class="ctaRow">
+        <a id="ctaGrow" class="btn btn--primary is-hidden" href="./grow.html">
+          Let’s grow it 🌱
+        </a>
+        <button id="ctaReset" class="btn btn--ghost is-hidden" type="button">
+          Reset
+        </button>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span class="footerText">Tip: turn your sound on later 😉</span>
+    </footer>
+  </main>
+
+  <script src="./index.js"></script>
+</body>
+</html>

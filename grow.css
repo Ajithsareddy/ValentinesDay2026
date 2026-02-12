@@ -1,0 +1,415 @@
+/* Grow Page Layout */
+.growLayout{
+  display: grid;
+  gap: 14px;
+  align-content: start;
+}
+.growHeader{
+  text-align: center;
+  display: grid;
+  gap: 10px;
+}
+
+/* Clear instructions card */
+.howTo{
+  width: min(360px, 92vw);
+  margin: 0 auto;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.68);
+  border: 1px solid rgba(0,0,0,0.06);
+  box-shadow: 0 10px 26px rgba(0,0,0,0.05);
+  backdrop-filter: blur(8px);
+}
+.howToRow{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 6px 0;
+}
+.howToRow--tiny{ padding-top: 2px; }
+.howToBadge{
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  font-size: 12px;
+  color: #fff;
+  background: linear-gradient(180deg, rgba(255,93,162,0.95), rgba(255,93,162,0.80));
+  box-shadow: 0 10px 18px rgba(255,93,162,0.18);
+  flex: 0 0 auto;
+}
+.howToText{
+  font-size: 13px;
+  color: rgba(22,50,38,0.78);
+  line-height: 1.25;
+}
+.howToHint{
+  font-size: 12px;
+  color: rgba(22,50,38,0.60);
+}
+
+/* Play Area */
+.playArea{
+  position: relative;
+  width: min(360px, 92vw);
+  height: 420px;
+  margin: 0 auto;
+  border-radius: 22px;
+  background: rgba(255,255,255,0.55);
+  border: 1px solid rgba(0,0,0,0.06);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.06);
+  overflow: hidden;
+}
+
+/* Prevent scroll interference while dragging/holding */
+.playArea, .sun, .waterBtn{ touch-action: none; }
+
+/* Sun + Target Zone */
+.sunTarget{
+  position:absolute;
+  top: 44px;
+  left: 50%;
+  width: 170px;
+  height: 120px;
+  transform: translateX(-50%);
+  border-radius: 20px;
+  border: 1px dashed rgba(255,93,162,0.40);
+  background: radial-gradient(circle at 50% 30%, rgba(255,93,162,0.10), transparent 60%);
+  animation: targetPulse 2.3s ease-in-out infinite;
+}
+@keyframes targetPulse{
+  0%,100% { box-shadow: 0 0 0 rgba(255,93,162,0.0); }
+  50% { box-shadow: 0 0 22px rgba(255,93,162,0.12); }
+}
+.sun{
+  position:absolute;
+  top: 26px;
+  left: 22px;
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  cursor: grab;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transform: translate3d(0,0,0);
+  will-change: left, top;
+}
+.sun:active{ cursor: grabbing; }
+.sunCore{
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff7c2, #ffd25a 55%, #ffb347);
+  box-shadow: 0 12px 24px rgba(255,179,71,0.28);
+}
+.sunRay{
+  position:absolute;
+  width: 76px;
+  height: 10px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, rgba(255,210,90,0.9), transparent);
+  opacity: 0.85;
+}
+.sunRay--1{ transform: rotate(0deg); }
+.sunRay--2{ transform: rotate(45deg); }
+.sunRay--3{ transform: rotate(90deg); }
+.sunRay--4{ transform: rotate(135deg); }
+
+/* Plant */
+.plantWrap{
+  position:absolute;
+  left: 50%;
+  bottom: 30px;
+  transform: translateX(-50%);
+}
+
+.plant{
+  position: relative;
+  width: 260px;
+  height: 300px;
+
+  /* Key realism anchors */
+  --soilY: 114px;         /* soil surface from bottom of plant */
+  --stem-h: 52px;         /* default stage 1 */
+}
+
+/* Pot */
+.plantPot{
+  position:absolute;
+  bottom: 0;
+  left: 50%;
+  width: 200px;
+  height: 135px;
+  transform: translateX(-50%);
+  border-radius: 0 0 30px 30px;
+  background: linear-gradient(180deg, #E6B08E, #D78D6A);
+  border: 1px solid rgba(0,0,0,0.08);
+  box-shadow: 0 16px 26px rgba(0,0,0,0.10);
+}
+.plantPot::before{
+  content:"";
+  position:absolute;
+  top: -18px;
+  left: 50%;
+  width: 220px;
+  height: 36px;
+  transform: translateX(-50%);
+  border-radius: 18px;
+  background: linear-gradient(180deg, #F0C2A4, #E6A883);
+  border: 1px solid rgba(0,0,0,0.08);
+}
+.plantSoil{
+  position:absolute;
+  top: 10px;
+  left: 50%;
+  width: 178px;
+  height: 22px;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: radial-gradient(circle at 50% 30%, #8B5A35, var(--soil));
+}
+
+/* Stem: tapered + slightly curved, anchored to soil */
+.stem{
+  position:absolute;
+  left: 50%;
+  bottom: var(--soilY);
+  width: 16px;
+  height: var(--stem-h);
+  transform: translateX(-50%) rotate(-6deg);
+  transform-origin: bottom center;
+  z-index: 2;
+  filter: drop-shadow(0 10px 14px rgba(47,107,79,0.10));
+}
+.stem::before{
+  content:"";
+  position:absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #9af07b 0%, #2f6b4f 70%, #24513d 100%);
+  /* taper top */
+  clip-path: polygon(38% 0%, 62% 0%, 86% 100%, 14% 100%);
+  box-shadow: inset 2px 0 0 rgba(255,255,255,0.18);
+}
+.stem::after{
+  content:"";
+  position:absolute;
+  left: 52%;
+  top: 10%;
+  width: 2px;
+  height: 78%;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.20);
+  transform: rotate(2deg);
+  filter: blur(0.2px);
+}
+
+/* Leaves (stable positions relative to stem height, so they never drift) */
+.leaf{
+  position:absolute;
+  width: 46px;
+  height: 28px;
+  opacity: 0;
+  transform: scale(0.2);
+  border-radius: 24px 24px 24px 7px;
+  background:
+    radial-gradient(circle at 28% 30%, rgba(255,255,255,0.40), transparent 58%),
+    linear-gradient(180deg, #8fe06f, var(--green-900));
+  box-shadow: 0 10px 18px rgba(47,107,79,0.10);
+  transition: transform 700ms cubic-bezier(.2,.9,.2,1), opacity 500ms ease;
+  z-index: 3;
+}
+.leaf::after{
+  content:"";
+  position:absolute;
+  left: 12px;
+  top: 6px;
+  width: 18px;
+  height: 2px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.30);
+  transform: rotate(-18deg);
+}
+
+/* Attach to stem using soilY + stem-h anchor */
+.leaf--1{
+  left: calc(50% - 64px);
+  bottom: calc(var(--soilY) + var(--stem-h) - 34px);
+  transform: rotate(-26deg) scale(0.2);
+}
+.leaf--2{
+  left: calc(50% + 18px);
+  bottom: calc(var(--soilY) + var(--stem-h) - 34px);
+  border-radius: 24px 24px 7px 24px;
+  transform: rotate(26deg) scale(0.2);
+}
+.leaf--3{
+  left: calc(50% - 78px);
+  bottom: calc(var(--soilY) + var(--stem-h) - 12px);
+  transform: rotate(-12deg) scale(0.2);
+}
+.leaf--4{
+  left: calc(50% + 34px);
+  bottom: calc(var(--soilY) + var(--stem-h) - 12px);
+  border-radius: 24px 24px 7px 24px;
+  transform: rotate(12deg) scale(0.2);
+}
+
+/* Flower: ALWAYS sits on top of stem using the same anchor */
+.flower{
+  position:absolute;
+  left: 50%;
+  bottom: calc(var(--soilY) + var(--stem-h) - 8px);
+  width: 54px;
+  height: 54px;
+  transform: translateX(-50%) scale(0.2);
+  opacity: 0;
+  transition: transform 800ms cubic-bezier(.2,.9,.2,1), opacity 600ms ease;
+  z-index: 4;
+  filter: drop-shadow(0 14px 18px rgba(255,93,162,0.14));
+}
+
+/* Petals: 6 petals with slight variation so it's not a perfect “circle” */
+.petal{
+  position:absolute;
+  width: 24px;
+  height: 34px;
+  left: 50%;
+  top: 50%;
+  transform-origin: 50% 88%;
+  border-radius: 20px 20px 20px 12px;
+  background:
+    radial-gradient(circle at 35% 30%, rgba(255,255,255,0.55), transparent 58%),
+    linear-gradient(180deg, #ffd3e7 0%, var(--pink-600) 85%);
+}
+.petal--1{ transform: translate(-50%,-92%) rotate(0deg)   scale(1.00); }
+.petal--2{ transform: translate(-5%,-65%)  rotate(55deg)  scale(0.98); }
+.petal--3{ transform: translate(6%,-45%)   rotate(115deg) scale(1.02); }
+.petal--4{ transform: translate(-50%,-10%) rotate(180deg) scale(0.98); }
+.petal--5{ transform: translate(-92%,-45%) rotate(240deg) scale(1.03); }
+.petal--6{ transform: translate(-95%,-68%) rotate(300deg) scale(0.99); }
+
+.flowerCore{
+  position:absolute;
+  left: 50%;
+  top: 50%;
+  width: 13px;
+  height: 13px;
+  transform: translate(-50%,-50%);
+  border-radius: 999px;
+  background: radial-gradient(circle at 35% 30%, #fff7c2, #ffd25a);
+  box-shadow: 0 10px 18px rgba(255,210,90,0.18);
+}
+
+/* Stage tuning (just update variables + visibility) */
+.plant--stage1{ --stem-h: 54px; }
+.plant--stage2{ --stem-h: 92px; }
+.plant--stage3{ --stem-h: 124px; }
+
+.plant--stage1 .leaf--1,
+.plant--stage1 .leaf--2{
+  opacity: 1;
+}
+.plant--stage1 .leaf--1{ transform: rotate(-26deg) scale(1); }
+.plant--stage1 .leaf--2{ transform: rotate(26deg) scale(1); }
+
+.plant--stage2 .leaf{ opacity: 1; }
+.plant--stage2 .leaf--1{ transform: rotate(-26deg) scale(1.06); }
+.plant--stage2 .leaf--2{ transform: rotate(26deg) scale(1.06); }
+.plant--stage2 .leaf--3{ transform: rotate(-12deg) scale(0.98); }
+.plant--stage2 .leaf--4{ transform: rotate(12deg) scale(0.98); }
+
+.plant--stage3 .leaf{ opacity: 1; }
+.plant--stage3 .leaf--1{ transform: rotate(-26deg) scale(1.10); }
+.plant--stage3 .leaf--2{ transform: rotate(26deg) scale(1.10); }
+.plant--stage3 .leaf--3{ transform: rotate(-12deg) scale(1.06); }
+.plant--stage3 .leaf--4{ transform: rotate(12deg) scale(1.06); }
+
+.plant--stage3 .flower{
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+  animation: bloomPop 1.2s cubic-bezier(.2,.9,.2,1) 1;
+}
+
+@keyframes bloomPop{
+  0% { transform: translateX(-50%) scale(0.55); }
+  65% { transform: translateX(-50%) scale(1.06); }
+  100% { transform: translateX(-50%) scale(1.0); }
+}
+
+/* Water Stream */
+.waterStream{
+  position:absolute;
+  left: 50%;
+  top: 160px;
+  width: 10px;
+  height: 0px;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  opacity: 0;
+  background: linear-gradient(180deg, rgba(140,220,255,0.85), rgba(70,170,255,0.65), transparent);
+  filter: blur(0.2px);
+  transition: opacity 120ms ease;
+}
+.watering .waterStream{
+  opacity: 1;
+  height: 170px;
+}
+
+/* Controls */
+.controls{
+  display: grid;
+  gap: 12px;
+  width: min(360px, 92vw);
+  margin: 0 auto;
+}
+.waterBtn{ width: 100%; justify-content: center; }
+
+.waterBtn.pulse{ animation: btnPulse 1.6s ease-in-out infinite; }
+@keyframes btnPulse{
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+.meters{ display: grid; gap: 10px; }
+.meter{
+  padding: 12px 12px 14px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.65);
+  border: 1px solid rgba(0,0,0,0.06);
+}
+.meterTop{
+  display:flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: rgba(22,50,38,0.75);
+  margin-bottom: 8px;
+}
+.bar{
+  height: 12px;
+  border-radius: 999px;
+  background: rgba(0,0,0,0.06);
+  overflow: hidden;
+}
+.fill{
+  height: 100%;
+  width: 0%;
+  border-radius: 999px;
+  transition: width 120ms linear;
+}
+.fill--water{
+  background: linear-gradient(90deg, rgba(110,210,255,0.85), rgba(70,170,255,0.95));
+}
+.fill--sun{
+  background: linear-gradient(90deg, rgba(255,210,90,0.85), rgba(255,179,71,0.95));
+}
+.nextRow{
+  display:flex;
+  gap: 10px;
+  align-items:center;
+  justify-content:center;
+}

@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no"
+  />
+  <meta name="theme-color" content="#FFF7FB" />
+  <title>Grow 🌤️💧</title>
+
+  <!-- Shared -->
+  <link rel="stylesheet" href="./index.css" />
+  <!-- Page specific -->
+  <link rel="stylesheet" href="./grow.css" />
+</head>
+
+<body>
+  <div class="vines vines--tl" aria-hidden="true"></div>
+  <div class="vines vines--br" aria-hidden="true"></div>
+
+  <main class="screen" role="main">
+
+    <section class="growLayout">
+      <div class="growHeader">
+        <h1 class="title">Let’s help it grow</h1>
+
+        <div class="howTo" role="note" aria-label="How to play">
+          <div class="howToRow">
+            <span class="howToBadge">1</span>
+            <span class="howToText"><b>Press & hold</b> the <span class="pink">Water</span> button.</span>
+          </div>
+
+          <div class="howToRow">
+            <span class="howToBadge">2</span>
+            <span class="howToText"><b>Drag</b> the <span class="pink">Sun</span> into the <span class="pink">pink box</span>.</span>
+          </div>
+
+          <div class="howToRow howToRow--tiny">
+            <span class="howToHint">✨ Keep the sun inside the box to fill faster.</span>
+          </div>
+        </div>
+
+        <p id="growHint" class="subtitle">Start with water 💧 then add sunshine 🌤️</p>
+      </div>
+
+      <div class="playArea" id="playArea">
+        <div class="sunTarget" id="sunTarget" aria-hidden="true"></div>
+
+        <div class="sun" id="sun" role="button" aria-label="Drag the sun" tabindex="0">
+          <div class="sunCore"></div>
+          <div class="sunRay sunRay--1"></div>
+          <div class="sunRay sunRay--2"></div>
+          <div class="sunRay sunRay--3"></div>
+          <div class="sunRay sunRay--4"></div>
+        </div>
+
+        <div class="plantWrap" aria-hidden="true">
+          <div class="plant plant--stage1" id="plant">
+            <div class="plantPot">
+              <div class="plantSoil"></div>
+            </div>
+
+            <div class="stem"></div>
+
+            <div class="leaf leaf--1"></div>
+            <div class="leaf leaf--2"></div>
+            <div class="leaf leaf--3"></div>
+            <div class="leaf leaf--4"></div>
+
+            <!-- Flower: 6 petals -->
+            <div class="flower" id="flower">
+              <div class="petal petal--1"></div>
+              <div class="petal petal--2"></div>
+              <div class="petal petal--3"></div>
+              <div class="petal petal--4"></div>
+              <div class="petal petal--5"></div>
+              <div class="petal petal--6"></div>
+              <div class="flowerCore"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="waterStream" id="waterStream" aria-hidden="true"></div>
+      </div>
+
+      <div class="controls">
+        <button id="waterBtn" class="btn btn--primary waterBtn" type="button" aria-label="Hold to water">
+          💧 Press & Hold Water
+        </button>
+
+        <div class="meters" aria-label="Progress meters">
+          <div class="meter">
+            <div class="meterTop">
+              <span>Water</span>
+              <span id="waterPct">0%</span>
+            </div>
+            <div class="bar">
+              <div class="fill fill--water" id="waterFill"></div>
+            </div>
+          </div>
+
+          <div class="meter">
+            <div class="meterTop">
+              <span>Sun</span>
+              <span id="sunPct">0%</span>
+            </div>
+            <div class="bar">
+              <div class="fill fill--sun" id="sunFill"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="nextRow">
+          <a id="nextBtn" class="btn btn--primary is-hidden" href="leaf-notes.html">Next: Leaf Notes 🍃</a>
+          <button id="resetGrow" class="btn btn--ghost" type="button">Reset grow</button>
+        </div>
+
+        <p id="growStatus" class="status" role="status" aria-live="polite"></p>
+      </div>
+    </section>
+  </main>
+
+  <script src="./index.js"></script>
+  <script src="./grow.js"></script>
+</body>
+</html>

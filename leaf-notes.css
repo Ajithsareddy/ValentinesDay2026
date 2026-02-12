@@ -1,0 +1,398 @@
+/* =========================================
+   Leaf Notes Page (FULL)
+   Fix: Shared CSS vars moved to .plantGroup
+   so leaf buttons (siblings of .plant) inherit them.
+   ========================================= */
+
+/* ---------------- Layout ---------------- */
+.leafLayout {
+  display: grid;
+  gap: 14px;
+  align-content: start;
+}
+
+.leafHeader {
+  text-align: center;
+  display: grid;
+  gap: 8px;
+}
+
+.progressCard {
+  width: min(360px, 92vw);
+  margin: 0 auto;
+  padding: 10px 12px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.68);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: rgba(22, 50, 38, 0.78);
+  font-size: 13px;
+}
+
+.progressRight {
+  font-weight: 800;
+  color: var(--pink-600);
+}
+
+/* ---------------- Scene card ---------------- */
+.leafScene {
+  position: relative;
+  width: min(360px, 92vw);
+  height: 460px;
+  margin: 0 auto;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+
+/* Centered plant group: ALL absolute children are relative to this */
+.plantGroup {
+  position: absolute;
+  left: 50%;
+  bottom: 10px;
+  width: 320px;
+  height: 440px;
+  transform: translateX(-50%);
+
+  /* ✅ Shared anchors (MUST be here so .leafBtn inherits) */
+  --stemCenterX: 160px; /* center of plantGroup */
+  --stemCenterY: 280px; /* center of plantGroup from bottom */
+  --soilY: 140px; /* top of soil surface from bottom of the plant */
+  --stemH: 190px; /* stem height */
+
+  /* Vertical attachment points (relative to soil) - evenly distributed */
+  --leafLow: 50px;
+  --leafMid: 100px;
+  --leafHigh: 150px;
+
+  /* Horizontal spread - wider for better visibility on iPhone */
+  --spreadA: 35px;
+  --spreadB: 35px;
+  --spreadC: 35px;
+}
+
+/* iPhone 14 Pro and similar large screens */
+@media (min-width: 390px) and (max-width: 430px) {
+  .plantGroup {
+    /* Keep at full size for iPhone 14 Pro */
+    transform: translateX(-50%);
+  }
+}
+
+/* Slight scale down on smaller phones */
+@media (max-width: 360px) {
+  .plantGroup {
+    transform: translateX(-50%) scale(0.92);
+    transform-origin: bottom center;
+  }
+}
+
+/* ---------------- Plant base ---------------- */
+.plant {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 260px;
+  height: 360px;
+  transform: translateX(-50%);
+}
+
+/* Pot */
+.plantPot {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 210px;
+  height: 140px;
+  transform: translateX(-50%);
+  border-radius: 0 0 30px 30px;
+  background: linear-gradient(180deg, #E6B08E, #D78D6A);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 16px 26px rgba(0, 0, 0, 0.10);
+  z-index: 1;
+}
+
+.plantPot::before {
+  content: "";
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  width: 232px;
+  height: 36px;
+  transform: translateX(-50%);
+  border-radius: 18px;
+  background: linear-gradient(180deg, #F0C2A4, #E6A883);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.plantSoil {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  width: 186px;
+  height: 22px;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: radial-gradient(circle at 50% 30%, #8B5A35, var(--soil));
+}
+
+/* Stem (centered) */
+.stem {
+  position: absolute;
+  left: 50%;
+  bottom: var(--soilY);
+  width: 12px;
+  height: var(--stemH);
+  transform: translateX(-50%) rotate(0deg);
+  border-radius: 999px;
+  background: linear-gradient(180deg, #95e07a, var(--green-900));
+  box-shadow: inset 2px 0 0 rgba(255, 255, 255, 0.22), 0 8px 16px rgba(47, 107, 79, 0.12);
+  outline: 1px solid rgba(0, 0, 0, 0.05);
+  z-index: 2;
+}
+
+/* Flower (attached to stem top) */
+.flower {
+  position: absolute;
+  left: 50%;
+  bottom: calc(var(--soilY) + var(--stemH) - 8px);
+  width: 46px;
+  height: 46px;
+  transform: translateX(-50%);
+  z-index: 5;
+  animation: bloomPop 1.2s cubic-bezier(.2, .9, .2, 1) 1;
+}
+
+@keyframes bloomPop {
+  0% {
+    transform: translateX(-50%) scale(0.7);
+    opacity: 0.7;
+  }
+  70% {
+    transform: translateX(-50%) scale(1.06);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-50%) scale(1);
+    opacity: 1;
+  }
+}
+
+.petal {
+  position: absolute;
+  inset: 0;
+  width: 24px;
+  height: 32px;
+  left: 50%;
+  top: 50%;
+  transform-origin: 50% 85%;
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.45), transparent 55%),
+    linear-gradient(180deg, #ffd1e4, var(--pink-600));
+  box-shadow: 0 12px 18px rgba(255, 93, 162, 0.14);
+}
+
+.petal--1 { transform: translate(-50%, -85%) rotate(0deg); }
+.petal--2 { transform: translate(-12%, -50%) rotate(90deg); }
+.petal--3 { transform: translate(-50%, -12%) rotate(180deg); }
+.petal--4 { transform: translate(-88%, -50%) rotate(270deg); }
+
+.flowerCore {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 13px;
+  height: 13px;
+  transform: translate(-50%, -50%);
+  border-radius: 999px;
+  background: radial-gradient(circle at 35% 30%, #fff7c2, #ffd25a);
+  box-shadow: 0 10px 18px rgba(255, 210, 90, 0.18);
+}
+
+/* ---------------- Leaf Buttons (KEY FIX) ----------------
+   Leaf buttons are siblings of .plant, so they MUST inherit vars from .plantGroup.
+*/
+.leafBtn {
+  position: absolute;
+  left: 50%;
+  bottom: calc(var(--soilY) + var(--y));
+  width: 58px;
+  height: 34px;
+  border: none;
+  padding: 0;
+
+  background:
+    radial-gradient(circle at 28% 30%, rgba(255, 255, 255, 0.40), transparent 58%),
+    linear-gradient(180deg, #8fe06f, var(--green-900));
+
+  border-radius: 28px 28px 28px 8px;
+  box-shadow: 0 10px 18px rgba(47, 107, 79, 0.12);
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+
+  /* per-leaf custom props - transform origin at leaf base for proper rotation */
+  transform-origin: center bottom;
+  transform: translateX(calc(-50% + var(--x))) translateY(0) rotate(var(--r));
+  transition: transform 160ms ease, filter 160ms ease;
+  z-index: 4;
+}
+
+.leafBtn:active {
+  transform: translateX(calc(-50% + var(--x))) translateY(0) rotate(var(--r)) scale(0.97);
+}
+
+.leafBtn::after {
+  content: "";
+  position: absolute;
+  left: 16px;
+  top: 9px;
+  width: 22px;
+  height: 2px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.30);
+  transform: rotate(-16deg);
+}
+
+.leafBtn.is-found {
+  filter: saturate(0.85) brightness(0.95);
+  box-shadow: 0 10px 18px rgba(255, 93, 162, 0.10);
+  outline: 2px solid rgba(255, 93, 162, 0.18);
+}
+
+/* right-side leaf rounding */
+.leafBtn--2,
+.leafBtn--4,
+.leafBtn--6 {
+  border-radius: 28px 28px 8px 28px;
+}
+
+/* Positions: spread + attachment heights - proper radial distribution */
+.leafBtn--1 { --x: calc(-1 * var(--spreadA)); --y: var(--leafLow);  --r: -28deg; }
+.leafBtn--2 { --x: var(--spreadA);            --y: var(--leafLow);  --r:  28deg; }
+
+.leafBtn--3 { --x: calc(-1 * var(--spreadB)); --y: var(--leafMid);  --r: -18deg; }
+.leafBtn--4 { --x: var(--spreadB);            --y: var(--leafMid);  --r:  18deg; }
+
+.leafBtn--5 { --x: calc(-1 * var(--spreadC)); --y: var(--leafHigh); --r: -8deg; }
+.leafBtn--6 { --x: var(--spreadC);            --y: var(--leafHigh); --r:  8deg; }
+
+/* ---------------- Actions ---------------- */
+.actions {
+  width: min(360px, 92vw);
+  margin: 0 auto;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ---------------- Modal ---------------- */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+}
+
+.modalBackdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.22);
+  backdrop-filter: blur(6px);
+}
+
+.modalCard {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(360px, 92vw);
+  transform: translate(-50%, -50%);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.86);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
+  padding: 14px;
+}
+
+.modalTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.modalPill {
+  padding: 8px 10px;
+  border-radius: 999px;
+  background: rgba(255, 93, 162, 0.12);
+  border: 1px solid rgba(255, 93, 162, 0.16);
+  font-weight: 750;
+  color: rgba(22, 50, 38, 0.85);
+  font-size: 13px;
+}
+
+.modalClose {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  background: rgba(255, 255, 255, 0.85);
+  font-size: 16px;
+}
+
+.noteText {
+  margin: 10px 2px 14px;
+  font-size: 16px;
+  line-height: 1.35;
+  color: rgba(22, 50, 38, 0.88);
+}
+
+.modalOk {
+  width: 100%;
+  justify-content: center;
+}
+
+/* ---------------- Floating petals decor ---------------- */
+.petalFloat {
+  position: absolute;
+  width: 22px;
+  height: 16px;
+  border-radius: 18px 18px 18px 6px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 179, 209, 0.85),
+    rgba(255, 93, 162, 0.75)
+  );
+  opacity: 0.18;
+  filter: blur(0.2px);
+  animation: drift 6.5s ease-in-out infinite;
+}
+
+.petalFloat--a {
+  left: 24px;
+  top: 40px;
+  animation-duration: 7.2s;
+}
+
+.petalFloat--b {
+  right: 34px;
+  top: 72px;
+  animation-duration: 6.2s;
+}
+
+.petalFloat--c {
+  left: 80px;
+  top: 24px;
+  animation-duration: 8s;
+}
+
+@keyframes drift {
+  0%,
+  100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(14px) rotate(8deg); }
+}

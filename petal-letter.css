@@ -1,0 +1,269 @@
+.letterLayout{
+  display:grid;
+  gap:14px;
+  align-content:start;
+}
+.letterHeader{
+  text-align:center;
+  display:grid;
+  gap:8px;
+}
+.stage{
+  width:min(360px,92vw);
+  margin:0 auto;
+  display:grid;
+  gap:12px;
+  justify-items:center;
+  padding-bottom:18px;
+}
+
+.is-hidden{ display:none !important; }
+
+/* Locked card */
+.lockedCard{
+  width:min(360px,92vw);
+  margin:0 auto;
+  padding:14px;
+  border-radius:18px;
+  background:rgba(255,255,255,0.72);
+  border:1px solid rgba(0,0,0,0.06);
+  box-shadow:0 16px 40px rgba(0,0,0,0.06);
+  display:grid;
+  gap:10px;
+  justify-items:center;
+  text-align:center;
+}
+.lockedIcon{ font-size:28px; }
+.lockedText{ color:rgba(22,50,38,0.78); font-size:13px; line-height:1.3; }
+.lockedHint{ display:block; margin-top:6px; color:rgba(22,50,38,0.60); }
+.lockedBtn{ width:100%; }
+
+/* Envelope (clickable div) */
+.envelope{
+  width:min(360px,92vw);
+  height:420px;
+  position:relative;
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+  outline:none;
+}
+.envelope:focus-visible{
+  box-shadow:0 0 0 3px rgba(255,93,162,0.18);
+  border-radius:22px;
+}
+
+.letterActions{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  z-index:50;
+  margin-top:-6px;
+}
+
+.envShadow{
+  position:absolute;
+  left:50%;
+  bottom:52px;
+  width:220px;
+  height:18px;
+  transform:translateX(-50%);
+  background:radial-gradient(closest-side, rgba(0,0,0,0.20), transparent 70%);
+}
+.envBody{
+  position:absolute;
+  left:50%;
+  bottom:78px;
+  width:290px;
+  height:200px;
+  transform:translateX(-50%);
+}
+.envBack{
+  position:absolute;
+  inset:0;
+  border-radius:18px;
+  background:linear-gradient(180deg, rgba(255,255,255,0.90), rgba(255,255,255,0.70));
+  border:1px solid rgba(0,0,0,0.07);
+  box-shadow:0 24px 48px rgba(0,0,0,0.10);
+}
+.envFront{
+  position:absolute;
+  left:0; right:0;
+  bottom:0;
+  height:135px;
+  border-radius:0 0 18px 18px;
+  background:linear-gradient(180deg, rgba(255,179,209,0.35), rgba(255,93,162,0.15));
+  border-top:1px solid rgba(0,0,0,0.06);
+}
+.envFront::before{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:-56px;
+  width:0; height:0;
+  transform:translateX(-50%);
+  border-left:145px solid transparent;
+  border-right:145px solid transparent;
+  border-bottom:58px solid rgba(255,255,255,0.78);
+  filter:drop-shadow(0 8px 12px rgba(0,0,0,0.06));
+}
+.envSeal{
+  position:absolute;
+  left:50%;
+  bottom:54px;
+  width:44px;
+  height:44px;
+  transform:translateX(-50%);
+  border-radius:999px;
+  background:
+    radial-gradient(circle at 35% 30%, rgba(255,255,255,0.45), transparent 55%),
+    linear-gradient(180deg, rgba(255,93,162,0.95), rgba(255,93,162,0.75));
+  box-shadow:0 14px 22px rgba(255,93,162,0.25);
+  border:1px solid rgba(0,0,0,0.06);
+}
+
+.peekCard{
+  position:absolute;
+  left:50%;
+  bottom:118px;
+  width:220px;
+  height:96px;
+  transform:translateX(-50%);
+  border-radius:16px;
+  background:rgba(255,255,255,0.82);
+  border:1px solid rgba(0,0,0,0.06);
+  display:grid;
+  place-items:center;
+  color:rgba(22,50,38,0.70);
+  font-weight:650;
+  letter-spacing:0.2px;
+  box-shadow:0 18px 40px rgba(0,0,0,0.06);
+  transition:opacity 220ms ease, transform 220ms ease;
+}
+
+/* Petal layer */
+.petalLetter{
+  position:absolute;
+  left:50%;
+  bottom:132px;
+  width:300px;
+  height:300px;
+  transform:translateX(-50%) scale(0.92);
+  opacity:0;
+  pointer-events:none;
+  transition:opacity 300ms ease, transform 420ms cubic-bezier(.2,.9,.2,1);
+  z-index:30;
+}
+.envelope.is-open .petalLetter{
+  opacity:1;
+  transform:translateX(-50%) scale(1);
+  pointer-events:auto;
+}
+.envelope.is-open .peekCard{
+  opacity:0;
+  transform:translateX(-50%) translateY(12px) scale(0.98);
+}
+
+/* Petals: transform applied on the BUTTON itself (stable) */
+.petal{
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:112px;
+  height:152px;
+  margin:-76px 0 0 -56px;
+  border:none;
+  background:transparent;
+  padding:0;
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+
+  transform-origin:50% 92%;
+  transform: rotate(var(--rot)) translateY(var(--dist)) scale(0.62);
+  transition: transform 520ms cubic-bezier(.2,.9,.2,1);
+}
+
+.petal::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:88px 88px 96px 30px;
+  background:
+    radial-gradient(circle at 30% 24%, rgba(255,255,255,0.65), transparent 55%),
+    radial-gradient(circle at 70% 24%, rgba(255,255,255,0.45), transparent 60%),
+    linear-gradient(180deg, rgba(255,205,228,0.98), rgba(255,93,162,0.86));
+  border:1px solid rgba(0,0,0,0.05);
+  box-shadow:0 20px 34px rgba(255,93,162,0.16);
+}
+
+/* open */
+.petal.is-open{
+  transform: rotate(var(--rot)) translateY(var(--dist)) scale(1);
+}
+
+/* Text stays upright with explicit inverse rotation */
+.petalText{
+  position:absolute;
+  left:50%;
+  top:28%;
+  width:98px;
+  transform: translate(-50%,-50%) rotate(var(--inv));
+  text-align:center;
+  font-weight:850;
+  font-size:11.5px;
+  line-height:1.15;
+  color:rgba(22,50,38,0.92);
+  opacity:0;
+  transition: opacity 220ms ease;
+  pointer-events:none;
+
+  padding:8px 10px;
+  border-radius:14px;
+  background:rgba(255,255,255,0.78);
+  border:1px solid rgba(0,0,0,0.06);
+  backdrop-filter:blur(8px);
+  box-shadow:0 14px 26px rgba(0,0,0,0.08);
+}
+.petal.is-open .petalText{ opacity:1; }
+
+/* Positions (spread outward) */
+.p1{ --rot:0deg;   --inv:0deg;    --dist:-90px; }
+.p2{ --rot:60deg;  --inv:-60deg;  --dist:-86px; }
+.p3{ --rot:120deg; --inv:-120deg; --dist:-84px; }
+.p4{ --rot:180deg; --inv:-180deg; --dist:-86px; }
+.p5{ --rot:240deg; --inv:-240deg; --dist:-84px; }
+.p6{ --rot:300deg; --inv:-300deg; --dist:-86px; }
+
+/* Center note */
+.centerNote{
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:178px;
+  transform:translate(-50%,-50%) scale(0.92);
+  border-radius:20px;
+  background:rgba(255,255,255,0.90);
+  border:1px solid rgba(0,0,0,0.06);
+  box-shadow:0 18px 40px rgba(0,0,0,0.08);
+  padding:12px 12px 10px;
+  text-align:center;
+  opacity:0;
+  transition: opacity 360ms ease, transform 520ms cubic-bezier(.2,.9,.2,1);
+  pointer-events:none;
+  z-index:40;
+}
+.centerTop{ font-weight:900; font-size:14px; color:rgba(22,50,38,0.92); }
+.centerMid{ margin-top:6px; font-size:13px; line-height:1.25; color:rgba(22,50,38,0.78); }
+.centerSig{ margin-top:10px; font-size:12px; font-weight:800; color:rgba(22,50,38,0.65); }
+
+.stage.is-complete .centerNote{
+  opacity:1;
+  transform:translate(-50%,-50%) scale(1);
+}
+
+.status{
+  min-height:22px;
+  text-align:center;
+}

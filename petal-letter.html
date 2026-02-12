@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+  <meta name="theme-color" content="#FFF7FB" />
+  <title>Petal Letter 💌</title>
+
+  <link rel="stylesheet" href="./index.css" />
+  <link rel="stylesheet" href="./petal-letter.css" />
+</head>
+
+<body>
+  <div class="vines vines--tl" aria-hidden="true"></div>
+  <div class="vines vines--br" aria-hidden="true"></div>
+
+  <main class="screen" role="main">
+    <header class="topbar">
+      <a class="pill" href="./leaf-notes.html">← Leaf Notes</a>
+    </header>
+
+    <section class="letterLayout">
+      <header class="letterHeader">
+        <h1 class="title">A little letter for you</h1>
+        <p class="subtitle" id="subText">Tap the envelope to open it 💌</p>
+      </header>
+
+      <!-- Locked view (shown only if leaf notes not complete) -->
+      <div id="lockedCard" class="lockedCard is-hidden" role="note" aria-label="Letter locked">
+        <div class="lockedIcon">🔒</div>
+        <div class="lockedText">
+          The letter unlocks after all leaf notes are found.
+          <span class="lockedHint">Go collect them and come back 💗</span>
+        </div>
+        <a class="btn btn--primary lockedBtn" href="./leaf-notes.html">Back to Leaf Notes 🍃</a>
+      </div>
+
+      <!-- Stage -->
+      <div id="stage" class="stage" aria-label="Envelope letter stage">
+        <!-- IMPORTANT: envelope is DIV (no nested button issue) -->
+        <div id="envelope" class="envelope" role="button" tabindex="0" aria-label="Open the envelope">
+          <div class="envShadow" aria-hidden="true"></div>
+
+          <div class="envBody" aria-hidden="true">
+            <div class="envBack"></div>
+            <div class="envFront"></div>
+            <div class="envSeal" aria-hidden="true"></div>
+
+            <div class="peekCard" aria-hidden="true">
+              <div class="peekLine">for my princess 👸</div>
+            </div>
+
+            <!-- Petal letter layer -->
+            <div class="petalLetter" aria-hidden="true">
+              <button class="petal p1" type="button" data-i="0" aria-label="Reveal line 1"><span class="petalText"></span></button>
+              <button class="petal p2" type="button" data-i="1" aria-label="Reveal line 2"><span class="petalText"></span></button>
+              <button class="petal p3" type="button" data-i="2" aria-label="Reveal line 3"><span class="petalText"></span></button>
+              <button class="petal p4" type="button" data-i="3" aria-label="Reveal line 4"><span class="petalText"></span></button>
+              <button class="petal p5" type="button" data-i="4" aria-label="Reveal line 5"><span class="petalText"></span></button>
+              <button class="petal p6" type="button" data-i="5" aria-label="Reveal line 6"><span class="petalText"></span></button>
+
+              <div class="centerNote" id="centerNote" aria-live="polite">
+                <div class="centerTop">Happy Valentine’s Day 💗</div>
+                <div class="centerMid" id="centerMid">I want to be with you again</div>
+                <div class="centerSig">— Your's Ajith 🌸</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="letterActions">
+          <button id="replayBtn" class="btn btn--ghost" type="button">Replay</button>
+          <a class="btn btn--primary" href="./index.html">Back to start 🌱</a>
+        </div>
+
+        <p class="status" id="statusLine" role="status" aria-live="polite"></p>
+      </div>
+    </section>
+  </main>
+
+  <script src="./index.js"></script>
+  <script src="./petal-letter.js"></script>
+</body>
+</html>
